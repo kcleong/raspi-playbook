@@ -1,0 +1,11 @@
+---
+
+- name: Add programs needed for webcam capturing
+  apt: name={{ item }} state=latest
+  with_items:
+    - python-dev 
+    - python-pip 
+    - python-opencv 
+    - libjpeg-dev
+
+    

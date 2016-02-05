@@ -1,0 +1,16 @@
+---
+- name: Configure a headless pi setup
+  hosts: pis
+  user: pi
+  sudo: yes
+
+  roles: 
+     - server_pi
+
+- name: Configure bunnycam
+  hosts: bunnycam
+  user: pi
+  sudo: yes
+
+  roles: 
+     - bunnycam     
