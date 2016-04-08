@@ -1,11 +1,4 @@
 ---
-- name: Configure a headless pi setup
-  hosts: pis
-  user: pi
-  sudo: yes
-
-  roles: 
-     - server_pi
 
 - name: Configure bunnycam
   hosts: bunnycam
@@ -13,4 +6,14 @@
   sudo: yes
 
   roles: 
+     - server_pi
      - bunnycam     
+
+- name: Configure IOT hub
+  hosts: things
+  user: pi
+  sudo: yes
+
+  roles: 
+     - server_pi
+     - mosquitto     
