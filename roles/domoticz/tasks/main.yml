@@ -16,7 +16,7 @@
 - name: Harden SSH with denyhosts
   template: src=initd.jinja2 dest=/etc/init.d/domoticz.sh owner=root group=root mode=0755
 
-- name: Set xvfb to run on startup
+- name: Set domoticz to run on startup
   shell: update-rc.d domoticz.sh defaults
   sudo: true
   notify: restart domoticz
