@@ -1,0 +1,27 @@
+---
+
+- name: Creates directory for Domoticz
+  file: path=/opt/domoticz state=directory
+
+- name: Download Domoticz
+  get_url: url=http://releases.domoticz.com/releases/beta/domoticz_linux_armv7l.tgz dest=/opt/domoticz/domoticz_linux_armv7l.tgz
+
+- name: Download and extract archive
+  unarchive: src=http://releases.domoticz.com/releases/beta/domoticz_linux_armv7l.tgz  dest=/opt/domoticz/ copy=no creates=/opt/domoticz/domoticz.sh
+
+
+# - name: Copy shell script for init.
+#   copy: src=/opt/domoticz/domoticz.sh dest=/etc/init.d/domoticz.sh owner=root group=root mode=0755
+
+- name: Harden SSH with denyhosts
+  template: src=initd.jinja2 dest=/etc/init.d/domoticz.sh owner=root group=root mode=0755
+
+- name: Set xvfb to run on startup
+  shell: update-rc.d domoticz.sh defaults
+  sudo: true
+  notify: restart domoticz
+
+- name: Update UFW firewall to allow HTTP access to domoticz.
+  ufw: rule=allow port=8080 proto=tcp src={{ item }}
+  with_items:
+    - 192.168.22.0/24    

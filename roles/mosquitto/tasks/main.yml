@@ -14,7 +14,7 @@
   with_items:
     - mosquitto
 
-- name: Update UFW firewall to allow SSH access to local bogon ranges.
+- name: Update UFW firewall to allow MQTT access to mosquitto.
   ufw: rule=allow port=1883 proto=tcp src={{ item }}
   with_items:
     - 192.168.22.0/24    

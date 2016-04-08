@@ -15,5 +15,6 @@
   sudo: yes
 
   roles: 
-     - server_pi
-     - mosquitto     
+     # - server_pi
+     # - mosquitto     
+     - domoticz     
