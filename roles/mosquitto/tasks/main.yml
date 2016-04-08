@@ -1,0 +1,20 @@
+---
+
+- name: Add mosquitto repo key
+  apt_key: url='http://repo.mosquitto.org/debian/mosquitto-repo.gpg.key' state=present
+
+- name: Add mosquitto-repo
+  apt_repository: repo='deb http://repo.mosquitto.org/debian jessie main'  state=present
+
+- name: Update apt
+  apt: update_cache=yes
+
+- name: Add programs needed for mosquitto
+  apt: name={{ item }} state=latest
+  with_items:
+    - mosquitto
+
+- name: Update UFW firewall to allow SSH access to local bogon ranges.
+  ufw: rule=allow port=1883 proto=tcp src={{ item }}
+  with_items:
+    - 192.168.22.0/24    
