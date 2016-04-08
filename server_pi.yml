@@ -17,4 +17,5 @@
   roles: 
      # - server_pi
      # - mosquitto     
-     - domoticz     
+     # - domoticz   
+     - nodered   

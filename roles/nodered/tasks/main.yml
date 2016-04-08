@@ -1,0 +1,14 @@
+---
+
+- name: Install node
+  apt: name=nodered state=latest
+
+- name: Set nodered to run on startup
+  shell: systemctl enable nodered.service
+  sudo: true
+  notify: restart nodered
+
+- name: Update UFW firewall to allow MQTT access to mosquitto.
+  ufw: rule=allow port=1880 proto=tcp src={{ item }}
+  with_items:
+    - 192.168.22.0/24      
