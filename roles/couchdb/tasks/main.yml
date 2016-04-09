@@ -1,0 +1,13 @@
+---
+
+- name: Add couchdb
+  apt: name=couchdb state=latest
+
+- name: Custom couchdb config
+  template: src=local.ini dest=/etc/couchdb/local.ini
+  notify: restart couchdb
+
+- name: Update UFW firewall to allow HTTP access to couchdb.
+  ufw: rule=allow port=5984 proto=tcp src={{ item }}
+  with_items:
+    - 192.168.22.0/24        
